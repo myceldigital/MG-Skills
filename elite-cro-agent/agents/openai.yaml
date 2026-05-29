@@ -1,0 +1,4 @@
+interface:
+  display_name: "Elite CRO Agent"
+  short_description: "Diagnose and improve conversion funnels"
+  default_prompt: "Use $elite-cro-agent to audit this landing page and propose high-impact CRO tests."

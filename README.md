@@ -4,6 +4,18 @@ A repository for reusable agent skills developed by Mycel Digital.
 
 ## Skills
 
+### Elite CRO Agent
+
+Location: `elite-cro-agent/`
+
+Diagnoses and improves landing pages, funnels, offers, signup flows, product pages, lead generation pages, checkout flows, onboarding journeys, ads-to-page message match, conversion copy, CRO strategy, experimentation plans, and conversion audits.
+
+Included files:
+- `SKILL.md` - main skill instructions and workflows
+- `references/cro-diagnostic-model.md` - detailed CRO diagnostic model
+- `references/cro-checklists-templates.md` - review checklists, copy patterns, experiment standards, and output templates
+- `agents/openai.yaml` - ChatGPT skill metadata
+
 ### Elite Logo Design Agent
 
 Location: `elite-logo-design-agent/`
