@@ -1,0 +1,5 @@
+interface:
+  display_name: "Elite Logo Design Agent"
+  short_description: "Generate, critique, refine, and present logos using elite design principles."
+  icon: "sparkles"
+  color: "#111111"
