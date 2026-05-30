@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dynamic Workflow Orchestrator"
+  short_description: "Plan and run agent workflow councils"
+  default_prompt: "Use $orchestrate-dynamic-workflows to decide whether a task needs subagents or a scripted dynamic workflow, then design the orchestration."

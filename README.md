@@ -28,3 +28,14 @@ Included files:
 - `references/concept-routes.md` - reusable concept route patterns
 - `references/output-templates.md` - output formats for critiques, concept sets, prompts, and presentations
 - `agents/openai.yaml` - ChatGPT skill metadata
+
+### Dynamic Workflow Orchestrator
+
+Location: `orchestrate-dynamic-workflows/`
+
+Designs, runs, or emulates dynamic multi-agent workflows for large audits, research, migrations, adversarial review, council-style planning, and repeatable agent orchestration.
+
+Included files:
+- `SKILL.md` - main orchestration rules, council roles, workflow blueprint, agent contracts, and verification standards
+- `references/claude-code-dynamic-workflows.md` - Claude Code dynamic workflow behavior and prompt template
+- `agents/openai.yaml` - ChatGPT skill metadata
