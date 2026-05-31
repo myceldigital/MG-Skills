@@ -4,6 +4,16 @@ A repository for reusable agent skills developed by Mycel Digital.
 
 ## Skills
 
+### Elite API Documentation
+
+Location: `elite-api-documentation/`
+
+Creates, rewrites, audits, and maintains production-grade API documentation for REST, GraphQL, RPC, SDK, webhook, event, platform, and developer-product APIs.
+
+Included files:
+- `SKILL.md` - main skill instructions, workflows, templates, audit rubric, documentation smells, and quality gates
+- `agents/openai.yaml` - ChatGPT skill metadata
+
 ### Elite CRO Agent
 
 Location: `elite-cro-agent/`

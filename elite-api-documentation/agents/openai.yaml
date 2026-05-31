@@ -1,0 +1,4 @@
+interface:
+  display_name: "Elite API Documentation"
+  short_description: "Create, audit, and maintain production-grade API docs"
+  default_prompt: "Use $elite-api-documentation to audit these API docs for accuracy, usability, examples, failure modes, and production readiness."
