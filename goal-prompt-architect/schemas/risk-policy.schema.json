@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/risk-policy.schema.json",
+  "title": "Goal Risk Policy",
+  "type": "object",
+  "required": ["classes", "allowed_without_approval", "allowed_with_rollback", "approval_required", "forbidden"],
+  "additionalProperties": false,
+  "properties": {
+    "classes": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "default_policy"],
+        "properties": {
+          "id": {"type": "integer", "minimum": 0, "maximum": 4},
+          "name": {"type": "string"},
+          "default_policy": {"enum": ["autonomous", "rollback_required", "approval_required", "forbidden"]}
+        }
+      }
+    },
+    "allowed_without_approval": {"type": "array", "items": {"type": "string"}},
+    "allowed_with_rollback": {"type": "array", "items": {"type": "string"}},
+    "approval_required": {"type": "array", "items": {"type": "string"}},
+    "forbidden": {"type": "array", "items": {"type": "string"}}
+  }
+}

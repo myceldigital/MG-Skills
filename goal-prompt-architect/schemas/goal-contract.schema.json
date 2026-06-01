@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/goal-contract.schema.json",
+  "title": "Goal Prompt Contract",
+  "type": "object",
+  "required": ["mission", "context", "risk_policy", "success_criteria", "evidence_matrix", "verification", "stop_rules", "output_contract"],
+  "additionalProperties": false,
+  "properties": {
+    "mission": {
+      "type": "object",
+      "required": ["objective", "scope"],
+      "properties": {
+        "objective": {"type": "string", "minLength": 20},
+        "scope": {"type": "string"},
+        "mode": {"enum": ["compact", "frontier", "marathon"]}
+      }
+    },
+    "context": {"type": "array", "items": {"type": "string"}},
+    "risk_policy": {"$ref": "risk-policy.schema.json"},
+    "success_criteria": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"type": "string", "minLength": 10}
+    },
+    "evidence_matrix": {"$ref": "evidence-matrix.schema.json"},
+    "verification": {
+      "type": "object",
+      "required": ["oracle_strength", "checks"],
+      "properties": {
+        "oracle_strength": {"type": "integer", "minimum": 1, "maximum": 5},
+        "checks": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "stop_rules": {"type": "array", "items": {"type": "string"}},
+    "output_contract": {"type": "array", "items": {"type": "string"}},
+    "marathon": {
+      "type": "object",
+      "properties": {
+        "target_runtime": {"type": "string"},
+        "checkpoint_cadence": {"type": "string"},
+        "persistent_state": {"type": "array", "items": {"type": "string"}},
+        "soft_blockers": {"type": "array", "items": {"type": "string"}},
+        "hard_blockers": {"type": "array", "items": {"type": "string"}},
+        "quality_ratchet": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

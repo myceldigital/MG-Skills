@@ -49,3 +49,43 @@ Included files:
 - `SKILL.md` - main orchestration rules, council roles, workflow blueprint, agent contracts, and verification standards
 - `references/claude-code-dynamic-workflows.md` - Claude Code dynamic workflow behavior and prompt template
 - `agents/openai.yaml` - ChatGPT skill metadata
+
+### Goal Prompt Architect
+
+Location: `goal-prompt-architect/`
+
+Creates, audits, and improves high-performance `/goal` prompts for autonomous coding agents and long-running agent workflows.
+
+Included files:
+- `SKILL.md` - main goal-prompt architecture rules, workflows, design principles, and quality checklist
+- `references/` - compact, frontier, marathon, domain adaptation, module, and playbook templates
+- `tools/lint_goal.py` - dependency-free `/goal` prompt linter
+- `schemas/` - JSON schemas for goal contracts, evidence matrices, and risk policies
+- `examples/` - good and bad prompt fixtures
+- `tests/` - linter regression tests
+- `agents/openai.yaml` - ChatGPT skill metadata
+
+### AegisGate Agent Firewall
+
+Location: `aegisgate-agent-firewall/`
+
+Provides a personal AI agent firewall for prompt-injection defense, unsafe tool-call blocking, secret-leak prevention, malicious skill detection, and memory-poisoning protection.
+
+Included files:
+- `SKILL.md` - main firewall protocol, risk ladder, intent contract, confirmation rules, and safe-failure behavior
+- `policy/` - detailed policies for memory, outbound actions, protected data, skills, tools, and risk classification
+- `references/` - threat model, adversarial patterns, and confirmation templates
+- `scripts/` - scanners for untrusted text, tool calls, outbound content, and skill folders
+- `tests/` - adversarial fixture examples
+- `agents/openai.yaml` - ChatGPT skill metadata
+
+### Remotion Motion Designer
+
+Location: `remotion-motion-designer/`
+
+Creates broadcast-quality animated videos and motion graphics in Remotion using React and TypeScript.
+
+Included files:
+- `SKILL.md` - main Remotion motion design rules, API constraints, output requirements, and code templates
+- `references/` - workflow, spring configs, animation patterns, audio-reactive guidance, and cinematic polish
+- `agents/openai.yaml` - ChatGPT skill metadata
