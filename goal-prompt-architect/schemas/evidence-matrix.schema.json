@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/evidence-matrix.schema.json",
+  "title": "Goal Evidence Matrix",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "required": ["criterion", "required_proof", "evidence_found", "status", "confidence", "source", "remaining_gap", "next_action"],
+    "additionalProperties": false,
+    "properties": {
+      "criterion": {"type": "string"},
+      "required_proof": {"type": "string"},
+      "evidence_found": {"type": "string"},
+      "status": {"enum": ["pass", "fail", "unknown", "partial"]},
+      "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+      "source": {"type": "string"},
+      "remaining_gap": {"type": "string"},
+      "next_action": {"type": "string"}
+    }
+  }
+}

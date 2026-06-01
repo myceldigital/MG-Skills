@@ -1,0 +1,4 @@
+interface:
+  display_name: "Goal Prompt Architect"
+  short_description: "Create rigorous /goal prompts for agents"
+  default_prompt: "Use $goal-prompt-architect to turn this task into a verification-driven /goal prompt."

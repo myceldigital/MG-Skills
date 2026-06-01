@@ -1,0 +1,4 @@
+interface:
+  display_name: "Remotion Motion Designer"
+  short_description: "Design broadcast-quality Remotion animations"
+  default_prompt: "Use $remotion-motion-designer to create a polished Remotion animation for this video brief."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AegisGate Agent Firewall"
+  short_description: "Block prompt injection and unsafe agent actions"
+  default_prompt: "Use $aegisgate-agent-firewall to review this proposed agent action for prompt injection, data leaks, and unsafe side effects."
