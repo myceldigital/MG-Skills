@@ -1,0 +1,4 @@
+interface:
+  display_name: "Elite Figma Systems"
+  short_description: "Build scalable Figma systems and handoff"
+  default_prompt: "Use $elite-figma-systems to design or audit a Figma system that is scalable, component-driven, and ready for engineering."

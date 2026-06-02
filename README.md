@@ -39,6 +39,16 @@ Included files:
 - `references/output-templates.md` - output formats for critiques, concept sets, prompts, and presentations
 - `agents/openai.yaml` - ChatGPT skill metadata
 
+### Elite Figma Systems
+
+Location: `elite-figma-systems/`
+
+Creates, audits, and improves elite Figma systems for brand foundations, component libraries, variables/tokens, Auto Layout structure, Dev Mode handoff, Code Connect, Figma MCP workflows, and design-to-code readiness.
+
+Included files:
+- `SKILL.md` - main skill instructions, immutable Figma laws, system workflow, audit checklist, anti-patterns, and quality gates
+- `agents/openai.yaml` - ChatGPT skill metadata
+
 ### Dynamic Workflow Orchestrator
 
 Location: `orchestrate-dynamic-workflows/`
