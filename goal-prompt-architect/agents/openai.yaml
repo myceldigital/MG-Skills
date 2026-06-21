@@ -1,4 +1,15 @@
 interface:
-  display_name: "Goal Prompt Architect"
-  short_description: "Create rigorous /goal prompts for agents"
-  default_prompt: "Use $goal-prompt-architect to turn this task into a verification-driven /goal prompt."
+  display_name: Goal Prompt Architect
+  short_description: Create goal and loop execution contracts for autonomous agents.
+  default_prompt: Use $goal-prompt-architect to compile this task into the smallest sufficient goal or loop execution contract.
+  icon: target
+  accent_color: '#4F46E5'
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

@@ -64,7 +64,7 @@ Included files:
 
 Location: `goal-prompt-architect/`
 
-Creates, audits, and improves high-performance `/goal` prompts for autonomous coding agents and long-running agent workflows.
+Creates, audits, and improves goal and loop execution contracts for autonomous agents, including `/goal`, `/loop`, scheduled routine, verifier harness, planning-only, and audit-only surfaces.
 
 Included files:
 - `SKILL.md` - main goal-prompt architecture rules, workflows, design principles, and quality checklist
