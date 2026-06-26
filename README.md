@@ -64,15 +64,16 @@ Included files:
 
 Location: `goal-prompt-architect/`
 
-Creates, audits, and improves goal and loop execution contracts for autonomous agents, including `/goal`, `/loop`, scheduled routine, verifier harness, planning-only, and audit-only surfaces.
+Creates, audits, and improves goal, loop, and frontier runtime-backed execution contracts for autonomous agents. It now combines MG's prompt compiler/governor model with a GoalBuddy-style runtime board: oracle, `goal.md`, `state.yaml`, one active task, Scout/Judge/Worker/PM roles, bounded `allowed_files`, receipts, and final audit.
 
 Included files:
-- `SKILL.md` - main goal-prompt architecture rules, workflows, design principles, and quality checklist
-- `references/` - compact, frontier, marathon, domain adaptation, module, and playbook templates
-- `tools/lint_goal.py` - dependency-free `/goal` prompt linter
+- `SKILL.md` - main goal-prompt architecture rules, surface selection, runtime-backed `/goal` workflow, design principles, and quality checklist
+- `references/` - compact, frontier, marathon, runtime board, domain adaptation, module, and playbook templates
+- `tools/compile_goal_runtime.py` - dependency-free runtime board scaffold generator for `docs/goals/<slug>/goal.md`, `state.yaml`, and `notes/`
+- `tools/lint_goal.py` - dependency-free `/goal` prompt linter with compact, frontier, marathon, and runtime modes
 - `schemas/` - JSON schemas for goal contracts, evidence matrices, and risk policies
 - `examples/` - good and bad prompt fixtures
-- `tests/` - linter regression tests
+- `tests/` - linter and runtime compiler regression tests
 - `agents/openai.yaml` - ChatGPT skill metadata
 
 ### AegisGate Agent Firewall
