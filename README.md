@@ -60,20 +60,38 @@ Included files:
 - `references/claude-code-dynamic-workflows.md` - Claude Code dynamic workflow behavior and prompt template
 - `agents/openai.yaml` - ChatGPT skill metadata
 
+### Advertising Copy Council
+
+Location: `advertising-copy-council/`
+
+Writes, rewrites, and critiques advertising copy using twelve copywriting perspectives, adapted to the audience, offer, brand voice, and medium.
+Includes guidance for factual claims, channel constraints, creative approaches, and fictional council debates when requested.
+
+Included files:
+
+- `SKILL.md` - main copywriting workflow, evidence standards, review checks, and delivery guidance
+- `references/` - council principles, decision rules, format guidance, worked examples, and behavioural evaluation cases
+- `agents/openai.yaml` - ChatGPT skill metadata
+
 ### Goal Prompt Architect
 
 Location: `goal-prompt-architect/`
 
-Creates, audits, and improves goal, loop, and frontier runtime-backed execution contracts for autonomous agents. It now combines MG's prompt compiler/governor model with a GoalBuddy-style runtime board: oracle, `goal.md`, `state.yaml`, one active task, Scout/Judge/Worker/PM roles, bounded `allowed_files`, receipts, and final audit.
+Creates, audits, and improves goal, loop, and frontier runtime-backed execution contracts for autonomous agents.
+Supports Astra-led Manager/Implementer workflows with phase-scoped goals, smaller-model routing, and verification gates.
+Combines MG's prompt compiler/governor model with a GoalBuddy-style runtime board: oracle, `goal.md`, `state.yaml`, independent dependency-ready tasks, one writer per conflicting scope, Scout/Judge/Worker/PM roles, bounded `allowed_files`, receipts, and final audit.
 
 Included files:
+
 - `SKILL.md` - main goal-prompt architecture rules, surface selection, runtime-backed `/goal` workflow, design principles, and quality checklist
-- `references/` - compact, frontier, marathon, runtime board, domain adaptation, module, and playbook templates
+- `references/` - Codex Manager/Implementer guidance, compact, frontier, marathon, runtime board, domain adaptation, module, and playbook templates
 - `tools/compile_goal_runtime.py` - dependency-free runtime board scaffold generator for `docs/goals/<slug>/goal.md`, `state.yaml`, and `notes/`
 - `tools/lint_goal.py` - dependency-free `/goal` prompt linter with compact, frontier, marathon, and runtime modes
 - `schemas/` - JSON schemas for goal contracts, evidence matrices, and risk policies
 - `examples/` - good and bad prompt fixtures
 - `tests/` - linter and runtime compiler regression tests
+- `EVALS.md` - regression commands and live workflow evaluation scenarios
+- `docs/adr/` - autonomous parallel workflow decisions and compatibility policy
 - `agents/openai.yaml` - ChatGPT skill metadata
 
 ### AegisGate Agent Firewall

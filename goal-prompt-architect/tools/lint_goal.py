@@ -96,6 +96,8 @@ RUNTIME_TERMS = (
     "state.yaml",
     "board",
     "one active task",
+    "one writer per conflicting scope",
+    "dependencies",
     "active task",
     "receipt",
     "oracle",
@@ -316,7 +318,7 @@ def score_runtime(text: str, findings: list[Finding], categories: list[CategoryS
     runtime_hits = sum(1 for term in RUNTIME_TERMS if term in text.lower())
     runtime_ok = runtime_hits >= 6
     if not runtime_ok:
-        findings.append(Finding("WEAK_RUNTIME_BOARD", "error", "Runtime-backed goal does not specify enough board machinery.", "Name state.yaml or equivalent board truth, one active task, oracle, receipts, Scout/Judge/Worker or equivalent roles, and allowed_files for writes."))
+        findings.append(Finding("WEAK_RUNTIME_BOARD", "error", "Runtime-backed goal does not specify enough board machinery.", "Name state.yaml or equivalent board truth, one writer per conflicting scope, dependencies, oracle, receipts, Scout/Judge/Worker or equivalent roles, and allowed_files for writes."))
     categories.append(CategoryScore("runtime_board_truth", min(10, runtime_hits), 10, [f"runtime_terms={runtime_hits}"]))
 
 

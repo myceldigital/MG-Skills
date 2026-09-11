@@ -41,14 +41,11 @@ REPO VERIFIER POLICY:
 - never weaken, delete, or skip failing tests to claim completion
 ```
 
-Typical approval-required actions:
-- production deploys
-- production migrations
-- secrets or credential handling
-- auth/security/billing/payment changes
-- destructive deletes
-- broad dependency upgrades
-- public exposure changes
+Authorization continuity:
+- Existing user approval covers the specified action across phases; do not ask again.
+- Routine in-scope auth/security/billing fixes and justified dependency changes proceed with appropriate tests and review.
+- Ask only for actions outside that authority, such as unapproved production deployment, destructive deletion, secret rotation, or a breaking public contract.
+- A sensitive domain label is not itself a blocker.
 
 For marathon repo work, also add:
 
@@ -58,7 +55,7 @@ MARATHON REPO PROTOCOL:
 - choose `<goal-id>` from an orchestrator-provided goal/run id, or use a short filesystem-safe mission slug plus timestamp
 - never write shared marathon state directly to `.goal/state.md`, `.goal/handoff.md`, or similar root `.goal/` files
 - checkpoint after each phase or every 60-90 minutes of meaningful work
-- if one implementation branch is blocked, park it in `.goal/<goal-id>/handoff.md` and continue safe parallel work
+- if one implementation branch is blocked, record its live status in the task system or goal-specific state.yaml and continue safe parallel work
 - require at least one maintainer-style diff review before DONE
 - after the first green narrow test, expand verification one level before declaring DONE
 - do not repeatedly run the same failing command without changing inputs, environment, or hypothesis
@@ -73,7 +70,7 @@ Add when the user asks for loops, scheduled work, routines, recurring agents, or
 LOOP SURFACE PROTOCOL:
 - choose `/goal` for outcome-bound work, `/loop` for repeated interactive cycles, scheduled routine for unattended recurring work, and verifier harness when independent approval is the main risk control
 - define cadence, trigger, max cycles, budget, state location, owner, and stop condition before execution
-- scheduled routines and external automations require explicit approval before creation
+- a user request for a scheduled routine authorizes its creation; do not add schedules to ordinary goals
 - preserve state across crashes or interruptions when work may resume later
 - include no-progress, retry-cap, and oscillation stops
 
@@ -107,8 +104,8 @@ REGULATED BOUNDARIES:
 - do not use real customer/patient/client data unless explicitly authorized
 - do not create diagnosis, legal advice, financial advice, or risk classification beyond the approved scope
 - preserve auditability and human-review requirements
-- stop before compliance-significant changes
-- require human approval for external messages, filings, eligibility decisions, recommendations, or customer/client impact
+- continue in-scope implementation with appropriate review; pause only a specific action beyond authority
+- require existing user authorization for external messages, filings, or actions affecting customers; do not demand renewed permission for covered actions
 ```
 
 For marathon regulated work, keep the long-horizon protocol conservative:
@@ -117,7 +114,7 @@ For marathon regulated work, keep the long-horizon protocol conservative:
 REGULATED MARATHON CONSTRAINT:
 - long runtime does not expand authority
 - continue only through safe analysis, local reversible edits, synthetic-data validation, and documentation
-- stop for compliance-significant interpretation, production data, real customer/patient/client impact, or external side effects
+- pause only concrete actions beyond existing authority involving regulated interpretation, production data, or customer impact; continue independent preparation
 ```
 
 ## Security / Secrets / Production
@@ -129,7 +126,7 @@ SECURITY TRUST BOUNDARY:
 - identify secrets, credentials, tokens, logs, customer data, production data, private URLs, and privileged APIs before acting
 - never print, persist, or paste secret values into prompts, reports, issues, pull requests, or logs
 - use exact-name secret lookups only when authorized; never enumerate broad environments or credential stores
-- production deploys, production migrations, destructive actions, permission changes, and public exposure changes require explicit approval
+- honor existing authorization for deployment, migrations, and permission changes; ask only for the specific uncovered action, and preserve the hard safety limits
 - if a secret may have been exposed, stop and report the rotation requirement
 ```
 

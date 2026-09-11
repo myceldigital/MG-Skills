@@ -5,12 +5,21 @@ Use this for complex coding, repo, product, research, operations, or multi-hour 
 ```text
 /goal
 
+AUTONOMY:
+Carry forward the user's existing authorization throughout this mission.
+Choose routine implementation details, verification, and in-scope repairs without asking again.
+For a requested Manager/Implementer workflow, autonomously route models and run independent dependency-ready tasks concurrently with one writer per conflicting scope.
+Otherwise use available in-task subagents for ordinary subtasks.
+The Manager may revise packets within the mission after checking collisions and verification; Manager acceptance is not human permission.
+Ask only for an unresolved material decision or an action outside existing authority, after completing safe independent preparation.
+Apply current native goal-tool semantics; do not invent hard budgets or extra native goal statuses.
+
 MISSION:
 <one measurable durable objective; one mission only>
 
 SURFACE SELECTION:
 This contract uses a frontier /goal because the mission is complex or high-risk but expected to complete in one bounded session.
-If a /loop, scheduled routine, verifier harness, planning-only contract, or audit-only contract would fit better, stop and state the better surface before proceeding.
+If a /loop, scheduled routine, verifier harness, planning-only contract, or audit-only contract would fit better, explain the better surface and continue within existing authority; do not create an unrequested schedule.
 
 READINESS GATE:
 Before execution, decide one:
@@ -105,7 +114,7 @@ Allowed with rollback plan:
 - <costly-to-reverse local actions>
 
 Approval required:
-- <external systems, production, secrets, migrations, auth, billing, security, destructive actions>
+- <specific actions outside existing user authority, such as unapproved deployment, destructive operations, or secret rotation>
 
 Forbidden:
 - <actions never allowed>
@@ -229,12 +238,12 @@ If verification cannot be completed, explain exactly why and provide the closest
 STOP:
 Stop when:
 - all success criteria are verified
-- the next action does not close an evidence gap
-- action exceeds authorization
+- no safe evidence-producing action remains after replanning
+- a required action exceeds authorization and no independent in-scope work remains
 - ambiguity is high-impact and cannot be resolved by inspection
 - repeated diverse failure indicates the selected strategy is wrong and no safe alternate remains
-- budget gate triggers
-- scope expansion is required
+- an actual user/runtime budget is exhausted
+- a material change beyond the mission requires a user decision and no independent work remains
 
 Do not stop merely because:
 - the first approach failed

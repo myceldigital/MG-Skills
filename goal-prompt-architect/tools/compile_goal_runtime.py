@@ -104,9 +104,9 @@ def yaml_list(items: list[str], indent: int = 4) -> str:
 def render_goal_md(spec: GoalSpec) -> str:
     constraints = "\n".join(f"- {item}" for item in spec.constraints) or "- No additional constraints supplied; discover and record constraints during preflight."
     non_goals = "\n".join(f"- {item}" for item in spec.non_goals) or "- Do not expand beyond the mission without a PM or owner decision."
-    criteria = "\n".join(f"{idx}. {item}" for idx, item in enumerate(spec.success_criteria, 1)) or "1. Mission has observable evidence mapped to current receipts.\n2. Final audit confirms the owner outcome is complete or states the remaining gap."
+    criteria = "\n".join(f"{idx}. {item}" for idx, item in enumerate(spec.success_criteria, 1)) or "1. Mission has observable evidence mapped to current receipts.\n2. Final audit confirms the owner outcome is complete with no required work or verification remaining."
     allowed = "\n".join(f"- {item}" for item in spec.allowed_without_approval) or "- Read-only inspection and reversible local edits inside the active task's allowed_files."
-    approval = "\n".join(f"- {item}" for item in spec.approval_required) or "- Production changes, secrets, external side effects, destructive operations, broad dependency upgrades, or scope expansion."
+    approval = "\n".join(f"- {item}" for item in spec.approval_required) or "- Only actions outside existing user authority, such as an unapproved production deployment, destructive operation, secret rotation, or breaking public contract. Finish safe preparation first."
     forbidden = "\n".join(f"- {item}" for item in spec.forbidden) or "- Claiming DONE without evidence, editing outside allowed_files, or using the worker's assertion as sole proof."
     verify = "\n".join(f"- {item}" for item in spec.verify)
 
@@ -118,7 +118,7 @@ MISSION:
 {spec.mission}
 
 RUNTIME SURFACE:
-Use this goal as a frontier runtime-backed `/goal`: compile intent into a board, keep `state.yaml` as machine truth, execute one active task at a time, require receipts, and complete only after a final PM or Judge audit maps evidence back to the oracle.
+Use this goal as a frontier runtime-backed `/goal`: compile intent into a board, keep `state.yaml` as machine truth, execute independent dependency-ready tasks concurrently with one writer per conflicting scope, require receipts, and complete only after a final PM or Judge audit maps evidence back to the oracle.
 
 ORACLE:
 - live signal: {spec.oracle_signal}
@@ -137,6 +137,8 @@ NON-GOALS:
 {non_goals}
 
 RISK POLICY:
+Carry forward existing user authorization. Routine in-scope fixes and Manager packet revisions do not require renewed approval.
+Within a requested multi-session workflow, create and route independent Implementer tasks without per-task approval.
 Allowed without approval:
 {allowed}
 
@@ -150,11 +152,13 @@ VERIFICATION:
 {verify}
 
 EXECUTION LOOP:
-1. Read `state.yaml` and select exactly one active task.
-2. If no active task exists, PM activates the next safest evidence-closing task.
-3. Scout and Judge tasks are read-only and return receipts.
+1. Read `state.yaml`; derive active tasks from task statuses and select independent dependency-ready work with non-conflicting scopes.
+2. PM starts newly unblocked tasks without waiting for unrelated lanes; serialize conflicting resources and review accepted prerequisites before dispatch.
+3. Scout and Judge tasks are read-only and return receipts; Manager acceptance is not human approval.
 4. Worker tasks may write only inside `allowed_files` and must run the listed checks.
-5. PM records receipts, updates board truth, and continues until the final audit proves completion.
+5. PM records receipts, checks integration, updates board truth, and continues until the final audit proves completion.
+6. Derive active work from task statuses; active_task is a legacy focus pointer, not a concurrency limit.
+7. Respect actual user/runtime limits; checkpoints trigger replanning, not arbitrary termination. Apply native goal-tool lifecycle rules when available.
 
 STOP RULES:
 Return exactly one terminal state: DONE, PARTIAL DONE, BLOCKED, UNSAFE, BUDGET EXHAUSTED, or NEEDS HUMAN DECISION.
@@ -179,7 +183,9 @@ goal:
     signal: {yaml_scalar(spec.oracle_signal)}
     final_proof: {yaml_scalar(spec.final_proof)}
 rules:
-  one_active_task: true
+  one_active_task: false
+  one_writer_per_scope: true
+  dependencies_required: true
   state_yaml_is_truth: true
   prefer_largest_safe_useful_slice: true
   worker_must_stay_inside_allowed_files: true
@@ -189,6 +195,7 @@ tasks:
   - id: T001
     type: scout
     assignee: Scout
+    depends_on: []
     status: active
     objective: "Map relevant context, verification commands, constraints, and the first safe useful slice."
     inputs:
@@ -203,6 +210,7 @@ tasks:
   - id: T002
     type: judge
     assignee: Judge
+    depends_on: [T001]
     status: queued
     objective: "Choose the largest safe useful Worker slice by impact, reversibility, and verification strength."
     inputs:
@@ -216,21 +224,22 @@ tasks:
   - id: T003
     type: worker
     assignee: Worker
+    depends_on: [T002]
     status: queued
     objective: "Execute the first Judge-approved implementation or artifact slice."
     allowed_files: []
     verify:
 {verify_yaml}
     stop_if:
-      - "Need files outside allowed_files."
-      - "Need production, secrets, destructive action, or external side effect."
-      - "Verification fails twice without a changed hypothesis."
+      - "Need a Manager packet revision for files outside allowed_files; continue independent in-scope work."
+      - "Need an action outside existing user authority; complete safe preparation and ask only for the missing decision."
+      - "Verification fails twice without new evidence: change hypothesis or request Manager replanning; do not abandon the mission."
     receipt: null
   - id: T999
     type: judge
     assignee: Judge
     status: queued
-    objective: "Final audit: decide whether the full original owner outcome is complete."
+    objective: "Final audit: decide whether the full original owner outcome is complete; wait for all required tasks and integration, including newly added lanes."
     inputs:
       - "All receipts"
       - "Latest verification"

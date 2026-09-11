@@ -2,37 +2,47 @@
 
 Use this for long-horizon autonomous missions intended to run for many cycles, hours, or days. Prefer it when the user asks for maximum quality, deep autonomous execution, resilient continuation, or prompts that should not stop after a short investigation.
 
+For Codex Manager/Implementer runs, load `codex-manager-implementer.md` and apply its lifecycle and phase rules.
+Do not apply the generic cycle-count blocker gate to native goal status.
+Only pass a native token budget when explicitly requested by the user.
+
 ```text
 /goal
+
+AUTONOMY:
+Carry forward the user's existing authorization throughout this mission.
+Choose routine implementation details, verification, and in-scope repairs without asking again.
+For a requested Manager/Implementer workflow, autonomously route models and run independent dependency-ready tasks concurrently with one writer per conflicting scope.
+Otherwise use available in-task subagents for ordinary subtasks.
+The Manager may revise packets within the mission after checking collisions and verification; Manager acceptance is not human permission.
+Ask only for an unresolved material decision or an action outside existing authority, after completing safe independent preparation.
+Apply current native goal-tool semantics; do not invent hard budgets or extra native goal statuses.
 
 MISSION:
 <one measurable durable objective; one mission only>
 
 SURFACE SELECTION:
 This contract uses a marathon /goal because the mission needs sustained autonomous progress, durable state, repeated verification, and interruption recovery.
-If the mission is better served by a timed /loop, scheduled routine, verifier harness, planning-only contract, audit-only contract, or NOT READY state, stop and state the better surface before execution.
+If the mission is better served by a timed /loop, scheduled routine, verifier harness, planning-only contract, audit-only contract, or NOT READY state, explain the better surface and continue within existing authority; do not create an unrequested schedule.
 
 LONG-HORIZON INTENT:
 This is a sustained autonomous execution mission. Optimize for durable, reviewable, evidence-backed completion, not a short investigation. Continue through normal uncertainty, failed attempts, and multi-step implementation/work unless a hard blocker or explicit budget limit is reached.
 
 TARGET RUNTIME:
-Work for up to <N hours/days> or until DONE. Checkpoint every <60-90 minutes or meaningful phase transition>.
+Continue until verified completion, a genuine blocker, or an explicit user/runtime limit.
+Checkpoint at meaningful phase transitions and useful intervals; a checkpoint is not a hard stop.
 
 BUDGET:
-Set explicit ceilings before acting:
-- max cycles: <N>
-- max wall time: <N>
-- max tool calls or commands when relevant: <N>
-- max token/dollar budget when available: <N>
-- max repeated attempts per action: 2 without changed hypothesis, input, or strategy
+Respect actual user and runtime ceilings; track usage only when available.
+Do not invent mandatory wall-time, cycle, tool-call, token, or dollar limits.
+Only set a native token_budget when explicitly requested by the user.
+After two repeated failures without new evidence, change hypothesis, scope, or model rather than retry blindly.
 
-MINIMUM PERSISTENCE BEFORE BLOCKED:
-Do not return BLOCKED until you have:
-- tried at least 3 materially distinct strategies, or explained why fewer are possible
-- completed at least 8 meaningful observe-orient-act-verify cycles
-- attempted decomposition into smaller safe subgoals
-- produced partial evidence, diagnostic artifacts, or a resumable handoff
-- confirmed no safe parallel work remains
+BLOCKER POLICY:
+Inspect the cause, try evidence-supported alternatives when useful, and continue dependency-ready work.
+Do not manufacture eight cycles or three strategies before surfacing an obvious missing permission or dependency.
+Report material blockers promptly, preserving a resumable receipt.
+Native blocked status follows the current goal tool's threshold; a blocked lane does not imply a blocked mission.
 
 READINESS GATE:
 Before execution, decide one:
@@ -104,15 +114,15 @@ Create or update a durable mission state area unless forbidden by the repo/workf
 Use a goal-specific namespace because multiple `/goal` missions may run at once:
 
 .goal/<goal-id>/
-- state.md: current mission state, phase, next action
+- state.yaml: current mission state, phase, next action (omit if the task system already owns this)
 - evidence.md: success criteria and proof collected
 - decisions.md: architectural/workflow decisions and rationale
 - failures.md: failed attempts and lessons
 - commands.md: commands run, results, known-good checks
-- budget.md: cycle count, elapsed time, tool calls, token/dollar spend when available, and remaining budget
-- queue.md: current queue item, safe parallel branches, parked branches, owner/lease if applicable, and next wake/action
+- metrics.json: measured cycle count, elapsed time, tool calls, and token/dollar spend when available
+- task system or state.yaml: current queue item, safe parallel branches, parked branches, owner/lease if supported, and next wake/action
 - verification.md: verifier plan, verifier verdicts, weak evidence, contradicted evidence, and human approvals required
-- handoff.md: resumable summary for the next agent/session
+- handoff.md: durable context and evidence links for the next agent/session; live state remains in the task system or state.yaml
 
 Choose `<goal-id>` as a stable, filesystem-safe identifier for this mission, preferably `<short-mission-slug>-<YYYYMMDD-HHMM>` or an orchestrator-provided goal/run id. Reuse the same directory on continuation of the same goal.
 
@@ -195,9 +205,7 @@ Allowed with rollback plan:
 - <broader local refactors constrained to the mission>
 
 Approval required:
-- <production deploys or production migrations>
-- <secrets, credentials, external systems, billing, auth, security, destructive actions>
-- <broad dependency upgrades or public exposure changes>
+- <specific production, destructive, secret-rotation, or contract-breaking action outside existing user authority>
 
 Forbidden:
 - <actions never allowed>
@@ -326,9 +334,9 @@ For soft blockers:
 - continue with safe parallel work
 
 Hard blockers include:
-- production-impacting action required
-- irreversible or destructive action required
-- secrets/security/privacy/compliance risk
+- an action outside existing production authority is required
+- an unapproved irreversible or destructive action is required
+- a concrete unresolved safety boundary prevents the next required action
 - external side effect required without approval
 - required external dependency unavailable and no safe parallel work remains
 - no safe local validation or diagnostic evidence possible
@@ -336,22 +344,10 @@ Hard blockers include:
 Only hard blockers may produce BLOCKED when no parallel safe work remains.
 
 QUALITY RATCHET:
-After the first apparently working solution, do not immediately stop.
-
-Run quality passes:
-- Pass 1: make it work.
-- Pass 2: make it correct and tested.
-- Pass 3: make it maintainable, minimal, and reviewable.
-
-Score the result from 1-5 on:
-- correctness
-- verification strength
-- maintainability
-- minimality
-- architectural/workflow fit
-- risk containment
-
-Any score below 4 requires another improvement cycle or an explicit explanation of why further safe improvement is not possible within budget.
+Verify correctness, required user-facing behavior, maintainability, scope, and risk controls against the acceptance criteria.
+Fix material findings and rerun affected checks.
+Once required checks pass and findings are resolved, accept the phase and advance.
+Do not demand repeated review passes or arbitrary self-scores without a specific unresolved concern.
 
 VERIFY:
 Use a verification ladder:
@@ -368,13 +364,13 @@ If verification cannot be completed, explain exactly why and provide the closest
 STOP:
 Stop when:
 - all success criteria are verified and quality ratchet is satisfied
-- the next action does not close an evidence gap
-- action exceeds authorization
+- no safe evidence-producing action remains after replanning
+- a required action exceeds authorization and no independent in-scope work remains
 - hard blocker prevents progress and no safe parallel work remains
 - repeated diverse strategies show the mission is not currently achievable
 - anti-spin rules trigger and no strategy change remains
 - budget is exhausted after producing a resumable handoff
-- scope expansion is required to satisfy the mission
+- a material mission change requires a user decision and no independent work remains
 
 Do not stop merely because:
 - the task is large
@@ -404,7 +400,7 @@ Return:
 - files/artifacts changed
 - commands/checks run
 - verification results
-- quality-ratchet scores
+- material review findings and their resolution
 - failures and lessons
 - risk/rollback notes
 - unresolved uncertainties

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Advertising Copy Council"
+  short_description: "Write advertising copy with twelve expert perspectives"
+  default_prompt: "Use $advertising-copy-council to write advertising copy suited to my audience, offer, brand voice, and channel."

@@ -1,13 +1,22 @@
 # Frontier /goal Runtime Protocol
 
-Use this reference when a `/goal` prompt should become an execution system, not only a prompt. The protocol combines the Goal Prompt Architect contract layer with a GoalBuddy-style local runtime: oracle, board truth, one active task, bounded workers, receipts, and final audit.
+Use this reference when a `/goal` prompt should become an execution system, not only a prompt. The protocol combines the Goal Prompt Architect contract layer with a GoalBuddy-style local runtime: oracle, board truth, one writer per conflicting scope, bounded workers, receipts, and final audit.
+
+## Codex orchestration adapter
+
+For a Codex Manager/Implementer workflow, load `codex-manager-implementer.md` first.
+The Manager performs PM/Judge duties and delegates phase-scoped Worker execution to an appropriately sized model.
+Native goal tools own native goal status; an existing task system or this single board owns phase state.
+The compiler scaffolds a generic board only; it does not launch tasks, set models, activate native goals, or enforce transitions.
+Do not treat generated files as evidence that orchestration is running.
+Keep phase claims and live status out of Markdown.
 
 ## Council decision
 
 The best frontier `/goal` shape is two-layered:
 
 1. **Compiler/governor**: decide readiness, execution surface, success criteria, trust boundaries, risk policy, verifier architecture, anti-spin rules, and terminal states.
-2. **Runtime surface**: persist the mission in files, expose a board, execute one active task at a time, require receipts, and prevent completion until a final audit maps evidence to the oracle.
+2. **Runtime surface**: persist the mission in files, expose a board, execute independent dependency-ready tasks concurrently with one writer per conflicting scope, require receipts, and prevent completion until a final audit maps evidence to the oracle.
 
 Do not choose prompt-only for a long, vague, stale, or high-risk autonomous mission when a runtime board would materially reduce drift, false DONE, forgotten context, or tiny-task churn.
 
@@ -47,7 +56,9 @@ goal:
     signal: "..."
     final_proof: "..."
 rules:
-  one_active_task: true
+  one_active_task: false
+  one_writer_per_scope: true
+  dependencies_required: true
   state_yaml_is_truth: true
   prefer_largest_safe_useful_slice: true
   worker_must_stay_inside_allowed_files: true
@@ -63,7 +74,13 @@ checks:
 
 ### 3. Task
 
-Exactly one task is active unless the user explicitly asks for parallel work and disjoint write scopes are proven.
+Automatically run independent dependency-ready tasks concurrently.
+Use one writer per conflicting scope and one board owner.
+An autonomous workflow request covers routine decomposition and concurrent lanes; no per-task approval is required.
+`tasks[*].status` identifies active work; `active_task` is retained only as a legacy focus pointer, never as a global concurrency limit.
+Existing boards that explicitly require serial operation stay serial until their owner deliberately updates the policy; do not silently rewrite another running mission.
+Record `depends_on`, scope, owner, and integration evidence on new task packets.
+If a runtime cannot coordinate concurrent writers safely, use parallel read-only work and serialize code edits.
 
 Task types:
 
@@ -80,7 +97,10 @@ verify: []
 stop_if: []
 ```
 
-The worker may not edit outside `allowed_files`. If it needs to, it must stop and leave a receipt.
+The Worker asks the Manager to revise the packet before editing outside `allowed_files`.
+The Manager checks scope conflicts and verification, then updates the packet autonomously within the mission.
+Continue independent in-scope work while that decision is pending.
+Only a material decision beyond existing authority needs the user.
 
 ### 4. Receipt
 
@@ -164,12 +184,19 @@ Choose planning-only, audit-only, verifier harness, `/loop`, scheduled routine, 
    - existing plan: preserve plan facts, validate plan, then Worker slices
    - recovery: evidence mapping or triage before writes
    - audit: read-only unless fixes are separately approved
-6. Activate exactly one first task.
+6. Activate dependency-ready non-conflicting tasks; the generic discovery scaffold begins with one Scout until work scopes are known.
 7. Print the starter command:
 
 ```text
 /goal Follow docs/goals/<slug>/goal.md.
 ```
+
+## Authorization continuity
+
+Existing user authority persists through phases and repairs.
+Routine in-scope auth, billing, security, dependency, and local migration fixes require suitable verification, not new approval solely because of their domain.
+An actual unapproved deployment, destructive operation, secret rotation, or breaking contract remains a separate decision.
+Distinguish Manager acceptance from human approval and finish safe preparation before requesting the latter.
 
 ## Execution policy
 
