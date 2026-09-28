@@ -118,3 +118,24 @@ Included files:
 - `SKILL.md` - main Remotion motion design rules, API constraints, output requirements, and code templates
 - `references/` - workflow, spring configs, animation patterns, audio-reactive guidance, and cinematic polish
 - `agents/openai.yaml` - ChatGPT skill metadata
+
+### Elite Motion Graphics
+
+Location: `elite-motion-graphics/`
+
+Directs, creates, refines, and reviews motion graphics from concept through verified rendered delivery.
+Complements the Remotion-specific skill with art direction, typography, choreography, sound, UI morphs, seamless loops, character/3D production, and engine-independent quality control.
+
+Included files:
+
+- `SKILL.md` - production workflow, task routing, evidence standards, and delivery requirements
+- `references/` - design craft, rendering, sound, advanced production, critique, reusable briefs, source corrections, and behavioral evaluations
+- `scripts/motion.mjs` - dependency-free analytic springs, retargeting, indexed noise, and exposure sampling
+- `scripts/render.mjs` - optional Playwright/FFmpeg calibration renderer with raw-pixel determinism and export checks
+- `assets/canvas-starter.html` - complete seekable calibration scene with linear-light temporal sampling
+- `tests/motion.test.mjs` - motion mathematics and timing regression tests
+- `agents/openai.yaml` - skill display metadata
+
+Invoke as `$elite-motion-graphics` in a compatible skill host after adding the folder to that host's skill location.
+Read `elite-motion-graphics/references/render-engineering.md` for optional renderer setup and `elite-motion-graphics/references/evaluations.md` for verification.
+Run the dependency-free tests from this repository with `node --test elite-motion-graphics/tests/motion.test.mjs`.
